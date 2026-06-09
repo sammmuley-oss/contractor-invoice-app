@@ -28,7 +28,12 @@ class BackupService:
     @staticmethod
     def create_auto_backup() -> Optional[str]:
         """Create a timestamped copy of the SQLite database file."""
-        db_path = Path(settings.DATABASE_URL.replace("sqlite:///./", ""))
+        # Handle both sqlite:///./file.db and sqlite:////data/file.db formats
+        db_url = settings.DATABASE_URL
+        if db_url.startswith("sqlite:////"):
+            db_path = Path(db_url.replace("sqlite:///", ""))
+        else:
+            db_path = Path(db_url.replace("sqlite:///./", ""))
         if not db_path.exists():
             return None
 
