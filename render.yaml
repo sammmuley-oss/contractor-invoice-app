@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: contractor-invoice-app
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:////data/contractor_invoices.db
+      - key: UPLOAD_DIR
+        value: /data/uploads
+      - key: EXPORT_DIR
+        value: /data/exports
+      - key: BACKUP_DIR
+        value: /data/backups
+      - key: DEBUG
+        value: "false"
+    disk:
+      name: invoice-data
+      mountPath: /data
+      sizeGB: 1

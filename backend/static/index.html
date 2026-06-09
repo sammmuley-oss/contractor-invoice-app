@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contractor Invoice Management Software for Indian contractors - Manage invoices, track payments, generate reports">
+    <title>Contractor Invoice Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon material-icons-round">receipt_long</span>
+                    <span class="logo-text">InvoiceHub</span>
+                </div>
+                <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+                    <span class="material-icons-round">menu</span>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
+                    <span class="material-icons-round">dashboard</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="companies" onclick="navigate('companies')">
+                    <span class="material-icons-round">business</span>
+                    <span class="nav-text">Companies</span>
+                </a>
+                <a href="#" class="nav-item" data-page="invoices" onclick="navigate('invoices')">
+                    <span class="material-icons-round">description</span>
+                    <span class="nav-text">Invoices</span>
+                </a>
+                <a href="#" class="nav-item" data-page="payments" onclick="navigate('payments')">
+                    <span class="material-icons-round">payments</span>
+                    <span class="nav-text">Payments</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reconciliation" onclick="navigate('reconciliation')">
+                    <span class="material-icons-round">account_balance</span>
+                    <span class="nav-text">Reconciliation</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reports" onclick="navigate('reports')">
+                    <span class="material-icons-round">assessment</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings" onclick="navigate('settings')">
+                    <span class="material-icons-round">settings</span>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-version">v1.0.0</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="navbar">
+                <div class="navbar-left">
+                    <div class="search-container">
+                        <span class="material-icons-round search-icon">search</span>
+                        <input type="text" id="globalSearch" class="search-input" placeholder="Search invoices, companies, payments..." oninput="handleGlobalSearch(this.value)">
+                        <div id="searchResults" class="search-dropdown"></div>
+                    </div>
+                </div>
+                <div class="navbar-right">
+                    <div class="navbar-date" id="currentDate"></div>
+                    <button class="btn btn-primary" onclick="openCreateInvoiceModal()">
+                        <span class="material-icons-round">add</span>
+                        Quick Add Invoice
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div id="pageContent" class="page-content">
+                <!-- Content loaded dynamically -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Container -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal" id="modalContent" onclick="event.stopPropagation()">
+            <!-- Modal content loaded dynamically -->
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
