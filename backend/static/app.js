@@ -2,7 +2,7 @@
    Contractor Invoice Management - Main Application JS
    ═══════════════════════════════════════════════════════════ */
 
-const API = 'http://localhost:8000/api';
+const API = '/api';
 
 // ─── State ────────────────────────────────────────────────
 let currentPage = 'dashboard';
