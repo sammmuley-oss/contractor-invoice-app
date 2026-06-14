@@ -145,7 +145,7 @@ function forceCloseModal() {
 // ─── Status Badge ─────────────────────────────────────────
 function statusBadge(status) {
     const cls = status === 'Paid' ? 'badge-paid' :
-                status === 'Partially Paid' ? 'badge-partial' : 'badge-unpaid';
+        status === 'Partially Paid' ? 'badge-partial' : 'badge-unpaid';
     return `<span class="badge ${cls}">${status}</span>`;
 }
 
@@ -601,7 +601,7 @@ async function renderInvoices() {
                 <label class="filter-label">Month</label>
                 <select class="filter-select" id="filterMonth" onchange="applyInvoiceFilters()">
                     <option value="">All</option>
-                    ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((m, i) => `<option value="${i + 1}">${m}</option>`).join('')}
+                    ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m, i) => `<option value="${i + 1}">${m}</option>`).join('')}
                 </select>
             </div>
             <input type="text" class="form-input" style="max-width:250px" placeholder="Search invoices..." id="invoiceSearch" oninput="applyInvoiceFilters()">
@@ -699,9 +699,9 @@ function renderInvoiceTable(data) {
         <div class="pagination-controls">
             <button class="pagination-btn" ${data.page <= 1 ? 'disabled' : ''} onclick="invoicePage=${data.page - 1};applyInvoiceFilters()">Prev</button>
             ${Array.from({ length: Math.min(data.total_pages, 5) }, (_, i) => {
-                const p = i + 1;
-                return `<button class="pagination-btn ${p === data.page ? 'active' : ''}" onclick="invoicePage=${p};applyInvoiceFilters()">${p}</button>`;
-            }).join('')}
+        const p = i + 1;
+        return `<button class="pagination-btn ${p === data.page ? 'active' : ''}" onclick="invoicePage=${p};applyInvoiceFilters()">${p}</button>`;
+    }).join('')}
             <button class="pagination-btn" ${data.page >= data.total_pages ? 'disabled' : ''} onclick="invoicePage=${data.page + 1};applyInvoiceFilters()">Next</button>
         </div>
     `;
@@ -1157,8 +1157,8 @@ async function renderMonthlyReport() {
             <div class="filter-group">
                 <label class="filter-label">Month</label>
                 <select class="filter-select" id="rptMonth" onchange="loadMonthlyReport()">
-                    ${['January','February','March','April','May','June','July','August','September','October','November','December'].map((m, i) =>
-                        `<option value="${i + 1}" ${i + 1 === month ? 'selected' : ''}>${m}</option>`).join('')}
+                    ${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m, i) =>
+        `<option value="${i + 1}" ${i + 1 === month ? 'selected' : ''}>${m}</option>`).join('')}
                 </select>
             </div>
         </div>
@@ -1172,7 +1172,7 @@ async function loadMonthlyReport() {
     const month = document.getElementById('rptMonth').value;
     try {
         const data = await api(`/reports/monthly?year=${year}&month=${month}`);
-        const months = ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+        const months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         document.getElementById('monthlyReportData').innerHTML = `
             <div class="report-summary">
                 <div class="report-stat"><div class="report-stat-label">Total Invoices</div><div class="report-stat-value">${data.total_invoices}</div></div>
@@ -1390,7 +1390,7 @@ async function renderReconciliation() {
             opt.value = b; opt.textContent = b;
             select.appendChild(opt);
         });
-    } catch(e) {}
+    } catch (e) { }
 
     loadReconSummary();
     loadReconTransactions();
@@ -1408,7 +1408,7 @@ async function loadReconSummary() {
             <div class="recon-stat"><div class="recon-stat-value">${formatINRCompact(s.total_matched_amount)}</div><div class="recon-stat-label">Matched Amount</div></div>
         `;
         renderReconTabs(s);
-    } catch(e) {}
+    } catch (e) { }
 }
 
 function renderReconTabs(s) {
@@ -1421,10 +1421,10 @@ function renderReconTabs(s) {
         Unmatched: s.unmatched,
         Rejected: s.rejected,
     };
-    tabs.innerHTML = ['all','Matched','Needs_Review','Unmatched','Rejected'].map(t => {
+    tabs.innerHTML = ['all', 'Matched', 'Needs_Review', 'Unmatched', 'Rejected'].map(t => {
         const label = t === 'all' ? 'All' : t.replace('_', ' ');
-        return `<button class="recon-tab ${reconTab===t?'active':''}" onclick="reconTab='${t}';renderReconTabs(reconSummaryData);loadReconTransactions()">
-            ${label} <span class="tab-count">${counts[t]||0}</span>
+        return `<button class="recon-tab ${reconTab === t ? 'active' : ''}" onclick="reconTab='${t}';renderReconTabs(reconSummaryData);loadReconTransactions()">
+            ${label} <span class="tab-count">${counts[t] || 0}</span>
         </button>`;
     }).join('');
 }
@@ -1460,17 +1460,17 @@ async function loadReconTransactions() {
                 </table>
             </div>
         `;
-    } catch(e) {
+    } catch (e) {
         container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)">Failed to load transactions</div>';
     }
 }
 
 function renderReconRow(t) {
     const statusClass = t.match_status === 'Matched' ? 'status-matched' :
-                        t.match_status === 'Needs_Review' ? 'status-needs-review' :
-                        t.match_status === 'Rejected' ? 'status-rejected' : 'status-unmatched';
+        t.match_status === 'Needs_Review' ? 'status-needs-review' :
+            t.match_status === 'Rejected' ? 'status-rejected' : 'status-unmatched';
     const confClass = t.confidence_score >= 90 ? 'confidence-high' :
-                      t.confidence_score >= 80 ? 'confidence-medium' : 'confidence-low';
+        t.confidence_score >= 80 ? 'confidence-medium' : 'confidence-low';
 
     let actions = '';
     if (t.match_status === 'Needs_Review') {
@@ -1494,7 +1494,7 @@ function renderReconRow(t) {
         <td title="${t.description || ''}" style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${desc}</td>
         <td style="font-weight:600;color:var(--success)">${formatINR(t.credit_amount)}</td>
         <td style="font-size:0.8rem">${t.utr_number || t.reference_number || '-'}</td>
-        <td><span class="badge ${statusClass}" style="padding:3px 10px;border-radius:12px;font-size:0.75rem">${t.match_status.replace('_',' ')}</span></td>
+        <td><span class="badge ${statusClass}" style="padding:3px 10px;border-radius:12px;font-size:0.75rem">${t.match_status.replace('_', ' ')}</span></td>
         <td>${t.matched_invoice_number ? `<a href="#" onclick="navigate('invoices');return false" style="color:var(--primary);font-weight:500">${t.matched_invoice_number}</a>` : '-'}</td>
         <td>${t.confidence_score ? `<span class="confidence-badge ${confClass}">${t.confidence_score}%</span>` : '-'}</td>
         <td>${actions}</td>
@@ -1520,7 +1520,7 @@ async function uploadStatement(file) {
     if (!bankName) { showToast('Please select a bank first', 'error'); return; }
 
     const ext = file.name.split('.').pop().toLowerCase();
-    if (!['pdf','csv','xlsx','xls'].includes(ext)) {
+    if (!['pdf', 'csv', 'xlsx', 'xls'].includes(ext)) {
         showToast('Unsupported file format. Use PDF, CSV, XLSX, or XLS.', 'error');
         return;
     }
@@ -1544,7 +1544,7 @@ async function uploadStatement(file) {
         document.getElementById('uploadZone').style.display = '';
         loadReconSummary();
         loadReconTransactions();
-    } catch(e) {
+    } catch (e) {
         showToast('Upload failed: ' + e.message, 'error');
         document.getElementById('uploadProgress').style.display = 'none';
         document.getElementById('uploadZone').style.display = '';
@@ -1557,7 +1557,7 @@ async function approveMatch(txnId) {
         showToast('Match approved — payment recorded');
         loadReconSummary();
         loadReconTransactions();
-    } catch(e) { showToast('Approve failed: ' + e.message, 'error'); }
+    } catch (e) { showToast('Approve failed: ' + e.message, 'error'); }
 }
 
 async function rejectMatch(txnId) {
@@ -1566,7 +1566,7 @@ async function rejectMatch(txnId) {
         showToast('Match rejected');
         loadReconSummary();
         loadReconTransactions();
-    } catch(e) { showToast('Reject failed: ' + e.message, 'error'); }
+    } catch (e) { showToast('Reject failed: ' + e.message, 'error'); }
 }
 
 async function openManualMatchModal(txnId, amount) {
@@ -1596,7 +1596,7 @@ async function openManualMatchModal(txnId, amount) {
                 </div>
             </div>
         `);
-    } catch(e) { showToast('Failed to load invoices', 'error'); }
+    } catch (e) { showToast('Failed to load invoices', 'error'); }
 }
 
 async function manualMatch(txnId, invoiceNumber) {
@@ -1609,7 +1609,7 @@ async function manualMatch(txnId, invoiceNumber) {
         showToast('Manually matched & payment created');
         loadReconSummary();
         loadReconTransactions();
-    } catch(e) { showToast('Match failed: ' + e.message, 'error'); }
+    } catch (e) { showToast('Match failed: ' + e.message, 'error'); }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1675,7 +1675,7 @@ async function renderAgingReport() {
         html += '</tbody></table></div></div>';
 
         document.getElementById('agingContent').innerHTML = html;
-    } catch(e) {
+    } catch (e) {
         document.getElementById('agingContent').innerHTML = '<div class="card" style="text-align:center;padding:40px;color:var(--danger)">Failed to load aging report</div>';
     }
 }
@@ -1762,7 +1762,7 @@ async function loadLedger(gstNumber) {
         </div>`;
 
         container.innerHTML = html;
-    } catch(e) {
+    } catch (e) {
         container.innerHTML = `<div class="card" style="text-align:center;padding:40px;color:var(--danger)">Failed to load ledger: ${e.message}</div>`;
     }
 }
